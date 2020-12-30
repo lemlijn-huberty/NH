@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import re
 
+# last changed 30/12/2020
+
 df1 = pd.read_excel("C:/Python/primesSyndicales/Global.xls")
 df2 = df1[0:5]
 na1 = df2.to_numpy().reshape(1,50)
