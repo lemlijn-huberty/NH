@@ -4,8 +4,8 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 from tkinter import filedialog
 import os
 
-# last changed 30/12/2020;
-# only > XLSX < files;
+# last changed 30/12/2020
+# only > XLSX < files
 
 lookup_values = {'Code : 862': 1, 'Code : 101': 2, 'Code : 201': 3, 'Code : 214': 4, 'Code : 301': 5,
                  'Code : 601': 6, 'Code : 701': 7, 'Code : 856': 8, 'Code : 870': 9, 'Code : 0001': 10,
