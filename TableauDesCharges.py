@@ -3,7 +3,7 @@ import numpy as np
 import tkinter as tk
 from tkinter import filedialog
 
-# Version 25/12/2020
+# Version 31/12/2020
 # only > XLSX < files
 
 months = [("janvier"), ("février"), ("mars"), ("avril"), ("mai"), ("juin"), ("juillet"), ("août"), ("septembre"), ("octobre"), ("novembre"), ("décembre")]

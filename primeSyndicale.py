@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import re
 
-# last changed 30/12/2020
+# last changed 31/12/2020
 # only > XLS < files
 
 df1 = pd.read_excel("C:/Python/primesSyndicales/Global.xls")
