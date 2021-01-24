@@ -46,7 +46,7 @@ for filename in os.listdir(dirname):
         DMFA_TEMP['A8'].value = 'Type'
         DMFA_TEMP.delete_rows(DMFA_TEMP.min_row, 7)     # deletes first 7 rows
         df = pd.DataFrame(DMFA_TEMP.values)             # creates dataframe from openpyxl sheet
-        cols = [0, 5, 6]
+        cols = [0, 5, 6]                                # select columns A, F & G for deletion in next step
         df.drop(df.columns[cols], axis=1, inplace=True) # drop columns (index) list
         df.dropna(how='all', inplace=True)              # drop empty rows
         df.drop(df.tail(1).index, inplace=True)         # drop last n rows
