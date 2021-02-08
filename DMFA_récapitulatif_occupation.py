@@ -5,7 +5,7 @@ from itertools import islice
 from tkinter import filedialog
 import os
 
-# last changed 23/01/2020
+# last changed 08/02/2021
 # only > XLSX < files
 
 lookup_values = {'Code : 862': 1, 'Code : 101': 2, 'Code : 201': 3, 'Code : 214': 4, 'Code : 301': 5,
