@@ -113,7 +113,7 @@ for filename in os.listdir(dirname):
         fileOcc = filedialog.askopenfilename(initialdir = "c:/",title = "DMFA_occupation",filetypes = (("excel files","*.xlsx"),("all files","*.*")))
 
         wbOcc = openpyxl.load_workbook(fileOcc)
-        occDMFA = wbOcc['DMFA_recap_occ']          # Activates selected sheet
+        occDMFA = wbOcc['DMFA_occupation']          # Activates selected sheet
         data = occDMFA.values
         cols = next(data)[1:]
         data = list(data)
