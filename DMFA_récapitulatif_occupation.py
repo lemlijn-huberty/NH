@@ -33,7 +33,7 @@ for filename in os.listdir(dirname):
 
         workbook = openpyxl.load_workbook(filename)
         try:                                        # deletes results sheet 'DMFA_NH' if it already exists (from previous run)
-          del workbook['DMFA_modificative']
+          del workbook['DMFA_récapitulatif']
         except (KeyError, RuntimeError, TypeError, NameError):
           pass
 
