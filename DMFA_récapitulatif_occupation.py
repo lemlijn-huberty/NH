@@ -33,7 +33,7 @@ for filename in os.listdir(dirname):
 
         workbook = openpyxl.load_workbook(filename)
         try:                                        # deletes results sheet 'DMFA_NH' if it already exists (from previous run)
-          del workbook['DMFA_récapitulatif']
+          del workbook['DMFA_recap_occ']
         except (KeyError, RuntimeError, TypeError, NameError):
           pass
 
@@ -113,7 +113,7 @@ for filename in os.listdir(dirname):
         fileOcc = filedialog.askopenfilename(initialdir = "c:/",title = "DMFA_occupation",filetypes = (("excel files","*.xlsx"),("all files","*.*")))
 
         wbOcc = openpyxl.load_workbook(fileOcc)
-        occDMFA = wbOcc['DMFA_occupation']          # Activates selected sheet
+        occDMFA = wbOcc['DMFA_recap_occ']          # Activates selected sheet
         data = occDMFA.values
         cols = next(data)[1:]
         data = list(data)
@@ -131,7 +131,7 @@ for filename in os.listdir(dirname):
 
         finalDF = modDF.merge(occDF, on='NISS', how='left')
 
-        ws = workbook.create_sheet('DMFA_récapitulatif', 1)
+        ws = workbook.create_sheet('DMFA_recap_occ', 1)
         # inserts dataframe content to new worksheet
         for r in dataframe_to_rows(finalDF, index=False, header=True):
             ws.append(r)
