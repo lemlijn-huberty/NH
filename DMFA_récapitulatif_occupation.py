@@ -25,6 +25,8 @@ def getIndexes(dfObj, value):
 
 dirname = filedialog.askdirectory()                  # ask for directory of xlsx files to be processed
 
+fileOcc = filedialog.askopenfilename(initialdir = "c:/",title = "DMFA_occupation",filetypes = (("excel files","*.xlsx"),("all files","*.*")))
+
 for filename in os.listdir(dirname):
     if filename.endswith(".xlsx"):
 
@@ -42,6 +44,8 @@ for filename in os.listdir(dirname):
         DMFA_TEMP.unmerge_cells('A1:G1')
         #DMFA_TEMP.unmerge_cells('B4:C4')
         DMFA_TEMP.title = 'DMFA_ModTemp'
+        DMFA_site = DMFA_TEMP['B4'].value
+        DMFA_déclaration = DMFA_TEMP['B5'].value
         DMFA_TEMP['A7'].value = 'Type'
         DMFA_TEMP.delete_rows(DMFA_TEMP.min_row, 6)     # deletes first 6 rows
         df = pd.DataFrame(DMFA_TEMP.values)             # creates dataframe from openpyxl sheet
@@ -50,7 +54,6 @@ for filename in os.listdir(dirname):
         df.dropna(how='all', inplace=True)              # drop empty rows
         df.drop(df.tail(1).index, inplace=True)         # drop last n rows
         df.drop(df.head(1).index, inplace=True)         # drop first n rows
-
         indices = []
         for lookup in lookup_values:
             ListOfPositions = getIndexes(df, lookup)
@@ -86,6 +89,7 @@ for filename in os.listdir(dirname):
             sheet.delete_rows(i, 1)                #   to avoid reindexing of the remaining rows
 
         sheet.insert_cols(3, 2)                    # inserts 2 new columns as column 'C' (index 3) and 'D' (index 4)
+        #sheet.insert_cols(3, 2)                    # inserts 2 new columns as column 'C' (index 3) and 'D' (index 4)
         for i, row in enumerate(sheet):            # go to every row and fills in Cn and Dn with agent name and NISS
             cell = 'B' + str(i + 1)
             cell_agent = 'C' + str(i + 1)
@@ -98,6 +102,10 @@ for filename in os.listdir(dirname):
             cell_codet = 'A' + str(i + 1)                     # copy content from column A into column G
             cell_code = 'G' + str(i + 1)
             sheet[cell_code].value = sheet[cell_codet].value
+            cell_site = 'H' + str(i + 1)
+            cell_decl = 'I' + str(i + 1)
+            sheet[cell_site].value = DMFA_site
+            sheet[cell_decl].value = DMFA_déclaration
 
         sheet.insert_rows(1, 1)                    # insert columns header
         sheet['A1'].value = 'CodeTemp'
@@ -107,10 +115,10 @@ for filename in os.listdir(dirname):
         sheet['E1'].value = 'Base'
         sheet['F1'].value = 'Montant'
         sheet['G1'].value = 'Code'
+        sheet['H1'].value = 'DMFA site'
+        sheet['I1'].value = 'DMFA décla'
 
         workbook.save(filename)
-
-        fileOcc = filedialog.askopenfilename(initialdir = "c:/",title = "DMFA_occupation",filetypes = (("excel files","*.xlsx"),("all files","*.*")))
 
         wbOcc = openpyxl.load_workbook(fileOcc)
         occDMFA = wbOcc['DMFA_occupation']          # Activates selected sheet
@@ -125,9 +133,11 @@ for filename in os.listdir(dirname):
         data = modDMFA.values
         cols = next(data)[1:]
         data = list(data)
+        #print(data)
         idx = [r[0] for r in data]
         data = (islice(r, 1, None) for r in data)
         modDF = pd.DataFrame(data, index=idx, columns=cols)
+        #print(modDF)
 
         finalDF = modDF.merge(occDF, on='NISS', how='left')
 
