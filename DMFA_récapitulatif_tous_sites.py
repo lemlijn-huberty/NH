@@ -32,20 +32,20 @@ for filename in os.listdir(dirname):
         print(filename)
 
         workbook = openpyxl.load_workbook(filename)
-        try:                                        # deletes results sheet 'DMFA_NH' if it already exists (from previous run)
+        try:                                        # deletes results sheet 'NISS' if it already exists (from previous run)
           del workbook['DMFA_modificative']
         except (KeyError, RuntimeError, TypeError, NameError):
           pass
 
         DMFA = workbook['Feuil1']                       # Activates selected sheet
         DMFA_TEMP = workbook.copy_worksheet(DMFA)       # copy worksheet to another
-        DMFA_TEMP.unmerge_cells('A1:F1')
+        DMFA_TEMP.unmerge_cells('A1:G1')
         #DMFA_TEMP.unmerge_cells('B4:C4')
         DMFA_TEMP.title = 'DMFA_ModTemp'
         DMFA_TEMP['A7'].value = 'Type'
-        DMFA_TEMP.delete_rows(DMFA_TEMP.min_row, 6)     # deletes first 6 rows
+        DMFA_TEMP.delete_rows(DMFA_TEMP.min_row, 7)     # deletes first 7 rows
         df = pd.DataFrame(DMFA_TEMP.values)             # creates dataframe from openpyxl sheet
-        cols = [0, 4, 5]                                # select columns A, E & F for deletion in next step
+        cols = [0, 5, 6]                                # select columns A, E & F for deletion in next step
         df.drop(df.columns[cols], axis=1, inplace=True) # drop columns (index) list
         df.dropna(how='all', inplace=True)              # drop empty rows
         df.drop(df.tail(1).index, inplace=True)         # drop last n rows
@@ -95,8 +95,8 @@ for filename in os.listdir(dirname):
                 sheet[cell_agent].value = cell_values[0]
                 cell_values = cell_values[1].split(')')
                 sheet[cell_niss].value = int(cell_values[0])
-            cell_codet = 'A' + str(i + 1)                     # copy content from column A into column F
-            cell_code = 'F' + str(i + 1)
+            cell_codet = 'A' + str(i + 1)                     # copy content from column A into column G
+            cell_code = 'G' + str(i + 1)
             sheet[cell_code].value = sheet[cell_codet].value
 
         sheet.insert_rows(1, 1)                    # insert columns header
@@ -104,8 +104,9 @@ for filename in os.listdir(dirname):
         sheet['B1'].value = 'Agent'
         sheet['C1'].value = 'Agent Nom'
         sheet['D1'].value = 'NISS'
-        sheet['E1'].value = 'Différence'
-        sheet['F1'].value = 'Code'
+        sheet['E1'].value = 'Base'
+        sheet['F1'].value = 'Montant'
+        sheet['G1'].value = 'Code'
 
         workbook.save(filename)
 
@@ -119,6 +120,7 @@ for filename in os.listdir(dirname):
         idx = [r[0] for r in data]
         data = (islice(r, 1, None) for r in data)
         occDF = pd.DataFrame(data, index=idx, columns=cols)
+        #print(occDF)
 
         modDMFA = workbook['DMFA_ModTemp_2']
         data = modDMFA.values
@@ -127,6 +129,7 @@ for filename in os.listdir(dirname):
         idx = [r[0] for r in data]
         data = (islice(r, 1, None) for r in data)
         modDF = pd.DataFrame(data, index=idx, columns=cols)
+        #print(modDF)
 
         finalDF = modDF.merge(occDF, on='NISS', how='left')
 
