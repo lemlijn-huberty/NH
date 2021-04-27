@@ -4,7 +4,7 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 from tkinter import filedialog
 import os
 
-# last changed 30/12/2020
+# last changed 31/12/2020
 # only > XLSX < files
 
 lookup_values = {'Code : 862': 1, 'Code : 101': 2, 'Code : 201': 3, 'Code : 214': 4, 'Code : 301': 5,
@@ -46,7 +46,7 @@ for filename in os.listdir(dirname):
         DMFA_TEMP['A8'].value = 'Type'
         DMFA_TEMP.delete_rows(DMFA_TEMP.min_row, 7)     # deletes first 7 rows
         df = pd.DataFrame(DMFA_TEMP.values)             # creates dataframe from openpyxl sheet
-        cols = [0, 5, 6]
+        cols = [0, 5, 6]                                # select columns A, F & G for deletion in next step
         df.drop(df.columns[cols], axis=1, inplace=True) # drop columns (index) list
         df.dropna(how='all', inplace=True)              # drop empty rows
         df.drop(df.tail(1).index, inplace=True)         # drop last n rows
