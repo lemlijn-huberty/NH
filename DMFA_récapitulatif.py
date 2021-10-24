@@ -9,7 +9,8 @@ import os
 
 lookup_values = {'Code : 862': 1, 'Code : 101': 2, 'Code : 201': 3, 'Code : 214': 4, 'Code : 301': 5,
                  'Code : 601': 6, 'Code : 701': 7, 'Code : 856': 8, 'Code : 870': 9, 'Code : 0001': 10,
-                 'Code : 4001': 11}
+                 'Code : 4001': 11, 'Code : 8004': 12, 'Code : 8005': 13, 'Code : 8006': 14, 'Code : 855': 15,
+                 'Code : 898': 16}
 
 def getIndexes(dfObj, value):
     listOfPos = []
