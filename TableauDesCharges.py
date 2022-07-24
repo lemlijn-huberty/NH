@@ -8,7 +8,7 @@ from tkinter import filedialog
 
 months = [("janvier"), ("février"), ("mars"), ("avril"), ("mai"), ("juin"), ("juillet"), ("août"), ("septembre"), ("octobre"), ("novembre"), ("décembre")]
 
-files = np.array(['Antoine','CHA','CSL','CUP','Chanly','HP','IFAC','LaBouv','MSP','Séniori','Vielsal'])
+files = np.array(['Antoine','CHA','CSL','CUP','Chanly','HP','IFAC','LaBouv','MSP','Séniori'])
 
 def getIndexes(dfObj, value):
     listOfPos = []
@@ -32,7 +32,7 @@ def execute():
        val_from = df2['idx'].iloc[0]
        val_to = val_from + 85
        df_target = df[val_from:val_to]
-       df_target.columns = ["", "", "", "Total 2020", "janvier", "février", "mars", "avril", "mai", "juin", "juillet",
+       df_target.columns = ["", "", "", "Total 2022", "janvier", "février", "mars", "avril", "mai", "juin", "juillet",
                             "août", "septembre", "octobre", "novembre", "décembre"]
        target_excel = str(excel).replace(".xlsx", "_") + file + '.xlsx'
        print(lookup + '_' + str(val_from) + '-' + str(val_to) + ' ' + target_excel)
